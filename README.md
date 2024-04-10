@@ -1,4 +1,4 @@
-[中文](README_CN.MD) | English
+[中文](README_CN.md) | English
 
 # point_cloud_detection_env
 
