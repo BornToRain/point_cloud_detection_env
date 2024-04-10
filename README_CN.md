@@ -1,50 +1,50 @@
-[中文](README_CN.MD) | English
+中文 | [English](README.md)
 
 # point_cloud_detection_env
 
-Tutorial for setting up ROS2/cuda/cudnn/tensorrt/opencv/pcl/caffe/onnxruntime/cpp/python environment, requires internet connection throughout the process.
+搭建ros2/cuda/cudnn/tensorrt/opencv/pcl/caffe/onnxruntime/cpp/python环境教程,全程需联网.
 
-Applicable to Nvidia Jetson, Ubuntu, WSL2 Ubuntu
+适用nvidia jetson、ubuntu、wsl2 ubuntu
 
-> PS: If you find it useful, please give it a star
+> PS: 觉得有用劳驾点个star
 
-## Software Versions
+## 各软件版本
 
-I've placed each package (x86) on a net disk. For Jetson Orin Nano, you can directly use the compiled packages with "-compiled" suffix.
+每个包(x86)我都放在网盘了,如果是jetson orin nano可以直接用-compiled结尾已经编译好的包.
 
-- [Baidu Netdisk (Code: BTR1)](https://pan.baidu.com/s/1oFAPBnrNXOSf30ojL528eQ?pwd=BTR1)
+- [百度网盘(提取码: BTR1)](https://pan.baidu.com/s/1oFAPBnrNXOSf30ojL528eQ?pwd=BTR1)
 
-Additionally, you may need to check the computing power requirements for certain packages on [Nvidia's official device computing power](https://developer.nvidia.cn/cuda-gpus#compute).
+另外可能会用到的算力查询[nvidia官网设备算力](https://developer.nvidia.cn/cuda-gpus#compute)
 
-Below are the details of each software:
+以下是各个软件信息:
 
-- SystemOs: Ubuntu 20.04
+- SystemOs Ubuntu 20.04
 - CUDA: 11.4
 - cuDNN: 8.6.0
 - TensorRT: 8.5.3
 - OpenCV: 4.5.4
 - OpenCV_Contrib: 4.5.4
 - PCL: 1.13.0
-- Caffe: 1.0
-- ONNXRuntime: 1.16.3
-- CMake: 3.26.4
-- Python: 3.8
-- GCC: 9.4.0
-- ROS2: Foxy
+- caffe: 1.0
+- onnxruntime: 1.16.3
+- cmake: 3.26.4
+- python: 3.8
+- gcc: 9.4.0
+- Ros2: foxy
 
 ---
 
-## Change to a Domestic Source
+## 换国内源
 
-[Guide to Tsinghua Ubuntu Mirror](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/)
+[清华ubuntu镜像源](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/)
 
-Please note the differences in system version and architecture.
+注意系统版本和架构区别.
 
 **x86_64**
 ```shell
-# Backup
+# 备份
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo '# Default commented out the source image to speed up apt update, if necessary, uncomment it by yourself
+echo '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
 # deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
@@ -53,15 +53,15 @@ deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted 
 # deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
 
 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse' > /etc/apt/sources.list
-# Update and upgrade
+# 更新升级
 sudo apt update && sudo apt upgrade
 ```
 
 **arm64**
 ```shell
-# Backup
+# 备份
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo '# Default commented out the source image to speed up apt update, if necessary, uncomment it by yourself
+echo '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse
 # deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-updates main restricted universe multiverse
@@ -71,15 +71,15 @@ deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-backports main restr
 
 deb http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse
 # deb-src http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse' > /etc/apt/sources.list
-# Update and upgrade
+# 更新升级
 sudo apt update && sudo apt upgrade
 ```
 
 --- 
 
-## Environment Variables
+## 环境变量
 
-Set the following variables in *~/.bashrc*:
+将以下变量设置到 *~/.bashrc* 中
 
 ```shell
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -88,38 +88,41 @@ export CUDA_HOME=$CUDA_HOME:/usr/local/cuda
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/include
 export PCL_ROOT=/usr/local/pcl-1.13.0
 source /opt/ros/foxy/setup.bash
+
 ```
 
 --- 
 
-## CUDA, cuDNN, TensorRT
+## CUDA、cuDNN、TensorRT
 
-### Jetson
+### jetson
 
-Nvidia provides a suite for Jetson development boards, which includes CUDA, cuDNN, TensorRT, etc.
+nvidia官方给jetson开发板提供了套件,安装好就自带配套的CUDA、cuDNN、TensorRT等.
 
 ```shell
-# Install jtop
+# 安装jtop
 sudo -H pip3 install -U jetson-stats
 sudo apt update
-# CUDA, cuDNN, TensorRT, etc. will be installed automatically with Jetpack.
+# jetpack安装后cuda、cudnn、tensorrt等会自动安装并且配套
 sudo apt install nvidia-jetpack
 sudo reboot
 ```
 
-After rebooting, input `jtop` and then press 7 to view as shown in the figure:
+重启后输入jtop之后再按7即可如图查看
 
 [jtop](images/jtop.png)
 
-By default, OpenCV should show "With Cuda" as NO. However, it has been pre-compiled and installed, so it should show YES.
+OpenCV初始With Cuda应该是NO,这里我已经提前编译安装了所以是YES.
 
-### Ubuntu
+### ubuntu
 
 #### CUDA
 
-For non-Nvidia development boards, we need to install CUDA manually. It's recommended to install CUDA, cuDNN, and TensorRT using the deb packages to avoid package not found errors.
+非nvidia开发板无套件,我们手动安装下,这里建议三者都用deb包安装,不然会说找不到包.
 
-**WSL2**
+wsl2版和正常ubuntu使用cuda文件不一样,需要注意.
+
+**wsl2**
 ```shell
 wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
 sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -127,7 +130,7 @@ sudo dpkg -i cuda-repo-wsl-ubuntu-11-4-local_11.4.3-1_amd64.deb
 sudo apt-key add /var/cuda-repo-wsl-ubuntu-11-4-local/7fa2af80.pub
 ```
 
-**Normal**
+**正常**
 ```shell
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -135,16 +138,15 @@ sudo dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.3-470.82.01-1_amd64.deb
 sudo apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
 ```
 
-##### Compile and Install
+##### 编译安装
 ```shell
 sudo apt update
 sudo apt install cuda
-# Compile and test, can be skipped.
+# 编译测试,可以跳过.
 cd /usr/local/cuda/samples && make -j$(nproc)
 ```
 
-WSL2 installation of CUDA requires additional configuration, otherwise, a warning will appear.
-
+wsl2安装CUDA后还需要配置下,不然会有个警告.
 ```shell
 cd /usr/lib/wsl/lib
 sudo ln -sf libcuda.so.1.1 libcuda.so.1
@@ -160,14 +162,14 @@ sudo cp /var/cudnn-local-repo-ubuntu2004-8.6.0.163/cudnn-local-B0FE0A41-keyring.
 sudo dpkg -i /var/cudnn-local-repo-ubuntu2004-8.6.0.163/libcudnn8_8.6.0.163-1+cuda11.8_amd64.deb
 sudo dpkg -i /var/cudnn-local-repo-ubuntu2004-8.6.0.163/libcudnn8-dev_8.6.0.163-1+cuda11.8_amd64.deb
 sudo dpkg -i /var/cudnn-local-repo-ubuntu2004-8.6.0.163/libcudnn8-samples_8.6.0.163-1+cuda11.8_amd64.deb
-# Compile and test, can be skipped.
+# 编译测试,可以跳过
 sudo apt install libfreeimage3 libfreeimage-dev
 cd /usr/src/cudnn_samples_v8/mnistCUDNN
 sudo make clean && sudo make -j$(nproc)
 ./mnistCUDNN
 ```
 
-[cuDNN Test Image](images/cuDNN.png)
+[cuDNN测试图](images/cuDNN.png)
 
 #### TensorRT
 
@@ -176,40 +178,40 @@ sudo dpkg -i nv-tensorrt-local-repo-ubuntu2004-8.5.3-cuda-11.8_1.0-1_amd64.deb
 sudo cp /var/nv-tensorrt-local-repo-ubuntu2004-8.5.3-cuda-11.8/nv-tensorrt-local-3EFA7C6A-keyring.gpg /usr/share/keyrings/
 sudo apt update
 sudo apt install tensorrt
-# Compile and test, can be skipped.
+# 编译测试,可以跳过.
 cd /usr/src/tensorrt/samples/sampleOnnxMNIST
 sudo make clean && sudo make -j$(nproc)
 ../../bin/sample_onnx_mnist
 ```
 
-[TensorRT Test Image](images/TensorRT.png)
+[TensorRT测试图](images/TensorRT.png)
 
 ---
 
 ## OpenCV
 
-Reinstalling OpenCV is for CUDA acceleration. The OpenCV installed with Jetson Suite and Ubuntu apt does not include CUDA acceleration.
+重新安装OpenCV是为了CUDA加速,jetson套件安装和ubuntu apt安装都是不带CUDA加速的.
 
-### Uninstall (Optional)
+### 卸载(可选)
 
 ```shell
-# Optional uninstall, some may not need
+# 酌情卸载,有的可能不需要
 sudo apt purge libopencv*
 sudo apt autoremove
 sudo apt update
 ```
 
-### Decompression
+### 解压
 
 ```shell
-# Decompress
+# 解压
 tar xvf opencv-4.5.4.tar.gz
 unzip opencv_contrib-4.5.4.zip
 ```
 
-### Configuration
+### 配置
 
-After decompression, enter the build directory of opencv-4.5.4, there is a make.sh script, the content is as follows
+解压后进入opencv-4.5.4的build目录下有个make.sh脚本,内容如下
 **make.sh**
 ```shell
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -218,22 +220,24 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
 -D WITH_TBB=ON -D ENABLE_FAST_MATH=1 -D CUDA_FAST_MATH=1 -D WITH_CUBLAS=1 \
 -D WITH_CUDA=ON -D BUILD_opencv_cudacodec=OFF -D WITH_CUDNN=ON \
 -D OPENCV_DNN_CUDA=ON \
-# Modify according to device computing power
+# 这里根据设备算力修改
 -D CUDA_ARCH_BIN=8.7 \
 -D WITH_V4L=ON -D WITH_QT=OFF -D WITH_OPENGL=ON -D WITH_GSTREAMER=ON \
 -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_PC_FILE_NAME=opencv.pc \
 -D OPENCV_ENABLE_NONFREE=ON \
-# Modify according to your python directory
+# 根据自己python目录
 -D OPENCV_PYTHON3_INSTALL_PATH=/usr/lib/python3.8/dist-packages \
-# Modify according to the directory of opencv_contrib.zip
+# 根据自己python目录
+-D PYTHON_EXECUTABLE=/usr/bin/python \
+# 根据解压的opencv_contrib.zip目录
 -D OPENCV_EXTRA_MODULES_PATH=/home/nvidia/opencv_contrib-4.5.4/modules \
 -D INSTALL_PYTHON_EXAMPLES=OFF -D INSTALL_C_EXAMPLES=OFF -D BUILD_EXAMPLES=OFF .
 ```
 
-### Install Dependencies
+### 安装依赖
 
 ```shell
-# First install the dependencies required by OpenCV
+# 先安装OpenCV用到的依赖库
 sudo apt install build-essential cmake pkg-config unzip yasm git checkinstall \
  libjpeg-dev libpng-dev libtiff-dev \
  libavcodec-dev libavformat-dev libswscale-dev libavresample-dev \
@@ -244,17 +248,17 @@ sudo apt install build-essential cmake pkg-config unzip yasm git checkinstall \
  install libdc1394-22 libdc1394-22-dev libxine2-dev libv4l-dev v4l-utils \
  libgtk-3-dev \
  libtbb-dev
-# Optional dependencies
+# 可选安装项
 sudo apt install libatlas-base-dev gfortran \
  libprotobuf-dev protobuf-compiler \
  libgoogle-glog-dev libgflags-dev \
  libgphoto2-dev libeigen3-dev libhdf5-dev doxygen 
 ```
 
-### Compile and Install
+### 编译安装
 
 ```shell
-# Compile and install
+# 编译安装
 cd opencv-4.5.4/build
 sh make.sh
 make -j$(nproc)
@@ -263,15 +267,15 @@ sudo make install
 
 ---
 
-## ONNXRuntime (Optional)
+## onnxruntime(可选)
 
-Choose either ONNXRuntime or Caffe for installation.
+和caffe二选一安装就行.
 
-Enable CUDA cuDNN TensorRT support.
+开启CUDA cuDNN TensorRT支持.
 
-ONNXRuntime requires cmake >= 3.26.
+onnxruntime需要cmake>=3.26.
 
-### Install Dependencies
+### 安装依赖
 
 **cmake**
 ```shell
@@ -280,60 +284,60 @@ sudo ln -sf /home/nvidia/cmake-3.26.4-linux-x86_64/bin/cmake /usr/bin/cmake
 sudo ln -sf /home/nvidia/cmake-3.26.4-linux-x86_64/bin/ccmake /usr/bin/ccmake
 ```
 
-### Compile and Install
+### 编译安装
 
-**ONNXRuntime**
+**onnxruntime**
 ```shell
 tar xvf onnxruntime-1.16.3.tar.gz
 cd onnxruntime-1.16.3 
-# Compile and install
+# 编译安装
 sh make-arm64.sh
-# According to system architecture
+# 根据系统架构
 sh make-x86_64.sh
-# After executing the script, dependencies will be downloaded from GitHub. The command may fail due to network issues. Repeatedly execute until the download completes and the compilation starts.
+# 执行脚本后这里会连github下依赖,命令会因为网络失败,重复执行到下载完成开始编译即可.
 cd bulid/Linux/Release
 sudo make install
 ```
 
 ---
 
-## Caffe (Optional)
+## caffe(可选)
 
-Choose either ONNXRuntime or Caffe for installation.
+和onnxruntime二选一安装就行.
 
-Enable CUDA cuDNN support.
+开启CUDA cuDNN 支持
 
-> Caffe does not support cuDNN8 by default. I have modified the Caffe source files, which you can directly use.
+> caffe默认不支持cuDNN8的,这里的caffe源文件我已经修改过了,可以直接用.
 
-### Install Dependencies
+### 安装依赖
 ```shell
-# Install dependencies required by Caffe
+# 先安装caffe用到的依赖库
 sudo apt install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler \
 libboost-all-dev libopenblas-dev liblapack-dev libatlas-base-dev \
 libgflags-dev libgoogle-glog-dev liblmdb-dev \
 git cmake build-essential 
 ```
 
-### Decompression
+### 解压
 ```shell
 tar xvf caffe-1.0.tar.gz
 cd caffe-1.0 
 ```
 
-### Configuration
+### 配置
 
-After decompression, enter the root directory of caffe-1.0. There is a Makefile.config file, where some parameters need to be adjusted according to the actual situation.
+解压后进入caffe-1.0的根目录下有个Makefile.config文件,里面部分参数需要根据实际情况调整
 
 ```shell
-# Line 73, modify according to your actual directory
+# 73行,根据自己实际目录
 PYTHON_INCLUDE := /usr/include/python3.8 \
                    /usr/lib/python3/dist-packages/numpy/core/include
-# Lines 89, 90, choose according to the system architecture
+# 89,90行这里根据系统架构选择
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5/serial
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/aarch64-linux-gnu /usr/lib/aarch64-linux-gnu/hdf5/serial
 ```
 
-### Compile and Install
+### 编译安装
 ```shell
 make all -j$(nproc)
 make distribute
@@ -343,21 +347,23 @@ make distribute
 
 ## Ros2Foxy
 
-This should be the simplest. You can use a domestic source to accelerate installation.
+这个应该是最简单的,可以也就操作下用国内源加速安装
 
 ```shell
 sudo sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros2/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 sudo apt update
-# Full set
+# 全家桶
 sudo apt install ros-foxy-desktop python3-argcomplete
-# Base package, without GUI and related demos
+# 基础包,无gui和相关demo
 sudo apt install ros-foxy-ros-base python3-argcomplete
-# ROS2 development tools, ex:colcon
+# ros2开发工具 ex: colcon
 sudo apt install ros-dev-tools
+# ros点云与pcl点云转换库
 sudo apt install ros-foxy-pcl-conversions
+# ros图像与opencv图像转换库
 sudo apt install ros-foxy-cv-bridge
-# rosbridge
+# ros与前端交互库,websocket
 sudo apt install ros-foxy-rosbridge-suite
 ```
 
@@ -365,24 +371,23 @@ sudo apt install ros-foxy-rosbridge-suite
 
 ## PCL
 
-Reinstalling PCL is similar to OpenCV, enabling CUDA support.
+重新安装PCL也是和OpenCV同理,开启CUDA支持.
 
-### Configuration
+### 配置
 
 ```shell
 tar xvf pcl-1.13.0.tar.gz
-mkdir -p pcl-1.13.0/build && cd pcl-1.13.0/build
-ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/pcl-1.13.0 ..
+mkdir -p pcl-1.13.0/build && cd build
+ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX = /usr/local/pcl-1.13.0 ..
 ```
 
-Afterwards, configure as shown in the images below:
+之后如图设置
+[图1](images/pcl1.png)
+[图2](images/pcl2.png)
+[图3](images/pcl3.png)
+[图4](images/pcl4.png)
 
-[Image 1](images/pcl1.png)  
-[Image 2](images/pcl2.png)  
-[Image 3](images/pcl3.png)  
-[Image 4](images/pcl4.png)
-
-### Compilation and Installation
+### 编译安装
 
 ```shell
 cmake .
@@ -392,12 +397,14 @@ sudo make install
 
 ---
 
-## Summary
+## 总结
 
-If this tutorial is helpful to you, please don't forget to star it. Thank you very much.
+如果这个教程对您有帮助,请不要忘记给它点赞,非常感谢您的支持。
 
 ---
 
 ## License
 
 [MIT](LICENSE)
+
+
