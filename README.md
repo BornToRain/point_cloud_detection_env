@@ -400,4 +400,4 @@ If this tutorial is helpful to you, please don't forget to star it. Thank you ve
 
 ## License
 
-[MIT](LICENSE)
+[Apache 2.0](LICENSE)
