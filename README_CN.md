@@ -110,7 +110,7 @@ sudo reboot
 
 重启后输入jtop之后再按7即可如图查看
 
-[jtop](images/jtop.png)
+![jtop](images/jtop.png)
 
 OpenCV初始With Cuda应该是NO,这里我已经提前编译安装了所以是YES.
 
@@ -169,7 +169,7 @@ sudo make clean && sudo make -j$(nproc)
 ./mnistCUDNN
 ```
 
-[cuDNN测试图](images/cuDNN.png)
+![cuDNN测试图](images/cuDNN.png)
 
 #### TensorRT
 
@@ -184,7 +184,7 @@ sudo make clean && sudo make -j$(nproc)
 ../../bin/sample_onnx_mnist
 ```
 
-[TensorRT测试图](images/TensorRT.png)
+![TensorRT测试图](images/TensorRT.png)
 
 ---
 
@@ -382,10 +382,10 @@ ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX = /usr/local/pcl-1.13.0
 ```
 
 之后如图设置
-[图1](images/pcl1.png)
-[图2](images/pcl2.png)
-[图3](images/pcl3.png)
-[图4](images/pcl4.png)
+![图1](images/pcl1.png)
+![图2](images/pcl2.png)
+![图3](images/pcl3.png)
+![图4](images/pcl4.png)
 
 ### 编译安装
 

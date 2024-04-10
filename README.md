@@ -109,7 +109,7 @@ sudo reboot
 
 After rebooting, input `jtop` and then press 7 to view as shown in the figure:
 
-[jtop](images/jtop.png)
+![jtop](images/jtop.png)
 
 By default, OpenCV should show "With Cuda" as NO. However, it has been pre-compiled and installed, so it should show YES.
 
@@ -167,7 +167,7 @@ sudo make clean && sudo make -j$(nproc)
 ./mnistCUDNN
 ```
 
-[cuDNN Test Image](images/cuDNN.png)
+![cuDNN Test Image](images/cuDNN.png)
 
 #### TensorRT
 
@@ -182,7 +182,7 @@ sudo make clean && sudo make -j$(nproc)
 ../../bin/sample_onnx_mnist
 ```
 
-[TensorRT Test Image](images/TensorRT.png)
+![TensorRT Test Image](images/TensorRT.png)
 
 ---
 
@@ -377,10 +377,10 @@ ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/pcl-1.13.0 .
 
 Afterwards, configure as shown in the images below:
 
-[Image 1](images/pcl1.png)  
-[Image 2](images/pcl2.png)  
-[Image 3](images/pcl3.png)  
-[Image 4](images/pcl4.png)
+![Image 1](images/pcl1.png)  
+![Image 2](images/pcl2.png)  
+![Image 3](images/pcl3.png)  
+![Image 4](images/pcl4.png)
 
 ### Compilation and Installation
 
