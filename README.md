@@ -1,0 +1,2 @@
+# point_cloud_detection_env
+在nvidia jetson开发板上基于pcl/caffe/onnxruntime/cuda/cudnn/tensorrt的三维点云识别项目环境搭建教程
