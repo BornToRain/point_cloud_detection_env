@@ -34,7 +34,7 @@ Below are the details of each software:
 
 ---
 
-## Change to a Domestic Source
+## Change Apt Source
 
 [Guide to Tsinghua Ubuntu Mirror](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/)
 
@@ -42,36 +42,21 @@ Please note the differences in system version and architecture.
 
 **x86_64**
 ```shell
-# Backup
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo '# Default commented out the source image to speed up apt update, if necessary, uncomment it by yourself
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-
-deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse' > /etc/apt/sources.list
-# Update and upgrade
-sudo apt update && sudo apt upgrade
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
 ```
 
 **arm64**
 ```shell
-# Backup
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo '# Default commented out the source image to speed up apt update, if necessary, uncomment it by yourself
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-updates main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-updates main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-backports main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-backports main restricted universe multiverse
-
 deb http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse
-# deb-src http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse' > /etc/apt/sources.list
-# Update and upgrade
+```
+
+```shell
 sudo apt update && sudo apt upgrade
 ```
 
@@ -79,7 +64,7 @@ sudo apt update && sudo apt upgrade
 
 ## Environment Variables
 
-Set the following variables in *~/.bashrc*:
+Set the environment variables in *~/.bashrc*:
 
 ```shell
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -140,6 +125,7 @@ sudo apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
 sudo apt update
 sudo apt install cuda
 # Compile and test, can be skipped.
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 cd /usr/local/cuda/samples && make -j$(nproc)
 ```
 
@@ -163,6 +149,7 @@ sudo dpkg -i /var/cudnn-local-repo-ubuntu2004-8.6.0.163/libcudnn8-samples_8.6.0.
 # Compile and test, can be skipped.
 sudo apt install libfreeimage3 libfreeimage-dev
 cd /usr/src/cudnn_samples_v8/mnistCUDNN
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 sudo make clean && sudo make -j$(nproc)
 ./mnistCUDNN
 ```
@@ -178,6 +165,7 @@ sudo apt update
 sudo apt install tensorrt
 # Compile and test, can be skipped.
 cd /usr/src/tensorrt/samples/sampleOnnxMNIST
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 sudo make clean && sudo make -j$(nproc)
 ../../bin/sample_onnx_mnist
 ```
@@ -241,7 +229,7 @@ sudo apt install build-essential cmake pkg-config unzip yasm git checkinstall \
  libxvidcore-dev x264 libx264-dev libfaac-dev libmp3lame-dev libtheora-dev \
  libfaac-dev libmp3lame-dev libvorbis-dev \
  libopencore-amrnb-dev libopencore-amrwb-dev \
- install libdc1394-22 libdc1394-22-dev libxine2-dev libv4l-dev v4l-utils \
+ libdc1394-22 libdc1394-22-dev libxine2-dev libv4l-dev v4l-utils \
  libgtk-3-dev \
  libtbb-dev
 # Optional dependencies
@@ -257,6 +245,7 @@ sudo apt install libatlas-base-dev gfortran \
 # Compile and install
 cd opencv-4.5.4/build
 sh make.sh
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 make -j$(nproc)
 sudo make install
 ```
@@ -291,6 +280,7 @@ sh make-arm64.sh
 # According to system architecture
 sh make-x86_64.sh
 # After executing the script, dependencies will be downloaded from GitHub. The command may fail due to network issues. Repeatedly execute until the download completes and the compilation starts.
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 cd bulid/Linux/Release
 sudo make install
 ```
@@ -335,6 +325,7 @@ LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/aarch64-linux-gnu
 
 ### Compile and Install
 ```shell
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 make all -j$(nproc)
 make distribute
 ```
@@ -370,6 +361,7 @@ Reinstalling PCL is similar to OpenCV, enabling CUDA support.
 ### Configuration
 
 ```shell
+sudo apt install libusb-1.0-0-dev
 tar xvf pcl-1.13.0.tar.gz
 mkdir -p pcl-1.13.0/build && cd pcl-1.13.0/build
 ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/pcl-1.13.0 ..
@@ -386,6 +378,7 @@ Afterwards, configure as shown in the images below:
 
 ```shell
 cmake .
+# If errors occur during multi-core compilation, reduce the number of threads appropriately
 make -j$(nproc)
 sudo make install
 ```

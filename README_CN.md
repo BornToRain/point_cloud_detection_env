@@ -42,36 +42,21 @@
 
 **x86_64**
 ```shell
-# 备份
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-
-deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse' > /etc/apt/sources.list
-# 更新升级
-sudo apt update && sudo apt upgrade
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
 ```
 
 **arm64**
 ```shell
-# 备份
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-updates main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-updates main restricted universe multiverse
 deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-backports main restricted universe multiverse
-# deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-backports main restricted universe multiverse
-
 deb http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse
-# deb-src http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse' > /etc/apt/sources.list
-# 更新升级
+```
+
+```shell
 sudo apt update && sudo apt upgrade
 ```
 
@@ -165,6 +150,7 @@ sudo dpkg -i /var/cudnn-local-repo-ubuntu2004-8.6.0.163/libcudnn8-samples_8.6.0.
 # 编译测试,可以跳过
 sudo apt install libfreeimage3 libfreeimage-dev
 cd /usr/src/cudnn_samples_v8/mnistCUDNN
+# 多核编译如果报错适当减少线程数
 sudo make clean && sudo make -j$(nproc)
 ./mnistCUDNN
 ```
@@ -180,6 +166,7 @@ sudo apt update
 sudo apt install tensorrt
 # 编译测试,可以跳过.
 cd /usr/src/tensorrt/samples/sampleOnnxMNIST
+# 多核编译如果报错适当减少线程数
 sudo make clean && sudo make -j$(nproc)
 ../../bin/sample_onnx_mnist
 ```
@@ -245,7 +232,7 @@ sudo apt install build-essential cmake pkg-config unzip yasm git checkinstall \
  libxvidcore-dev x264 libx264-dev libfaac-dev libmp3lame-dev libtheora-dev \
  libfaac-dev libmp3lame-dev libvorbis-dev \
  libopencore-amrnb-dev libopencore-amrwb-dev \
- install libdc1394-22 libdc1394-22-dev libxine2-dev libv4l-dev v4l-utils \
+ libdc1394-22 libdc1394-22-dev libxine2-dev libv4l-dev v4l-utils \
  libgtk-3-dev \
  libtbb-dev
 # 可选安装项
@@ -261,6 +248,7 @@ sudo apt install libatlas-base-dev gfortran \
 # 编译安装
 cd opencv-4.5.4/build
 sh make.sh
+# 多核编译如果报错适当减少线程数
 make -j$(nproc)
 sudo make install
 ```
@@ -295,6 +283,7 @@ sh make-arm64.sh
 # 根据系统架构
 sh make-x86_64.sh
 # 执行脚本后这里会连github下依赖,命令会因为网络失败,重复执行到下载完成开始编译即可.
+# # 多核编译如果报错适当减少脚本中线程数
 cd bulid/Linux/Release
 sudo make install
 ```
@@ -339,6 +328,7 @@ LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/aarch64-linux-gnu
 
 ### 编译安装
 ```shell
+# 多核编译如果报错适当减少线程数
 make all -j$(nproc)
 make distribute
 ```
@@ -376,6 +366,7 @@ sudo apt install ros-foxy-rosbridge-suite
 ### 配置
 
 ```shell
+sudo apt install libusb-1.0-0-dev
 tar xvf pcl-1.13.0.tar.gz
 mkdir -p pcl-1.13.0/build && cd build
 ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX = /usr/local/pcl-1.13.0 ..
@@ -391,6 +382,7 @@ ccmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX = /usr/local/pcl-1.13.0
 
 ```shell
 cmake .
+# 多核编译如果报错适当减少线程数
 make -j$(nproc)
 sudo make install
 ```
