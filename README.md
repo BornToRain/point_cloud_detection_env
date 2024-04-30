@@ -21,7 +21,7 @@ Below are the details of each software:
 - SystemOs: Ubuntu 20.04
 - CUDA: 11.4
 - cuDNN: 8.6.0
-- TensorRT: 8.5.3
+- TensorRT: 8.5.2.2
 - OpenCV: 4.5.4
 - OpenCV_Contrib: 4.5.4
 - PCL: 1.13.0
@@ -30,7 +30,7 @@ Below are the details of each software:
 - CMake: 3.26.4
 - Python: 3.8
 - GCC: 9.4.0
-- ROS2: Foxy
+- ROS2: Galactic
 
 ---
 
@@ -72,7 +72,7 @@ export PATH=$PATH:/usr/local/cuda/bin
 export CUDA_HOME=$CUDA_HOME:/usr/local/cuda
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/include
 export PCL_ROOT=/usr/local/pcl-1.13.0
-source /opt/ros/foxy/setup.bash
+source /opt/ros//setup.bash
 ```
 
 --- 
@@ -159,8 +159,8 @@ sudo make clean && sudo make -j$(nproc)
 #### TensorRT
 
 ```shell
-sudo dpkg -i nv-tensorrt-local-repo-ubuntu2004-8.5.3-cuda-11.8_1.0-1_amd64.deb
-sudo cp /var/nv-tensorrt-local-repo-ubuntu2004-8.5.3-cuda-11.8/nv-tensorrt-local-3EFA7C6A-keyring.gpg /usr/share/keyrings/
+sudo dpkg -i nv-tensorrt-local-repo-ubuntu2004-8.5.2-cuda-11.8_1.0-1_amd64.deb
+sudo cp /var/nv-tensorrt-local-repo-ubuntu2004-8.5.2-cuda-11.8/nv-tensorrt-local-3EFA7C6A-keyring.gpg /usr/share/keyrings/
 sudo apt update
 sudo apt install tensorrt
 # Compile and test, can be skipped.
@@ -332,7 +332,7 @@ make distribute
 
 ---
 
-## Ros2Foxy
+## Ros2Galactic
 
 This should be the simplest. You can use a domestic source to accelerate installation.
 
@@ -341,15 +341,15 @@ sudo sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros2/ubuntu $(lsb_release -sc) 
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 sudo apt update
 # Full set
-sudo apt install ros-foxy-desktop python3-argcomplete
+sudo apt install ros-galactic-desktop python3-argcomplete
 # Base package, without GUI and related demos
-sudo apt install ros-foxy-ros-base python3-argcomplete
+sudo apt install ros-galactic-ros-base python3-argcomplete
 # ROS2 development tools, ex:colcon
 sudo apt install ros-dev-tools
-sudo apt install ros-foxy-pcl-conversions
-sudo apt install ros-foxy-cv-bridge
+sudo apt install ros-galactic-pcl-conversions
+sudo apt install ros-galactic-cv-bridge
 # rosbridge
-sudo apt install ros-foxy-rosbridge-suite
+sudo apt install ros-galactic-rosbridge-suite
 ```
 
 ---

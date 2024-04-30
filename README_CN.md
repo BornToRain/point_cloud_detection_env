@@ -21,7 +21,7 @@
 - SystemOs Ubuntu 20.04
 - CUDA: 11.4
 - cuDNN: 8.6.0
-- TensorRT: 8.5.3
+- TensorRT: 8.5.2.2
 - OpenCV: 4.5.4
 - OpenCV_Contrib: 4.5.4
 - PCL: 1.13.0
@@ -30,7 +30,7 @@
 - cmake: 3.26.4
 - python: 3.8
 - gcc: 9.4.0
-- Ros2: foxy
+- Ros2: galactic
 
 ---
 
@@ -72,7 +72,7 @@ export PATH=$PATH:/usr/local/cuda/bin
 export CUDA_HOME=$CUDA_HOME:/usr/local/cuda
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/include
 export PCL_ROOT=/usr/local/pcl-1.13.0
-source /opt/ros/foxy/setup.bash
+source /opt/ros/galactic/setup.bash
 
 ```
 
@@ -160,8 +160,8 @@ sudo make clean && sudo make -j$(nproc)
 #### TensorRT
 
 ```shell
-sudo dpkg -i nv-tensorrt-local-repo-ubuntu2004-8.5.3-cuda-11.8_1.0-1_amd64.deb
-sudo cp /var/nv-tensorrt-local-repo-ubuntu2004-8.5.3-cuda-11.8/nv-tensorrt-local-3EFA7C6A-keyring.gpg /usr/share/keyrings/
+sudo dpkg -i nv-tensorrt-local-repo-ubuntu2004-8.5.2-cuda-11.8_1.0-1_amd64.deb
+sudo cp /var/nv-tensorrt-local-repo-ubuntu2004-8.5.2-cuda-11.8/nv-tensorrt-local-3EFA7C6A-keyring.gpg /usr/share/keyrings/
 sudo apt update
 sudo apt install tensorrt
 # 编译测试,可以跳过.
@@ -335,7 +335,7 @@ make distribute
 
 ---
 
-## Ros2Foxy
+## Ros2Galactic
 
 这个应该是最简单的,可以也就操作下用国内源加速安装
 
@@ -344,17 +344,17 @@ sudo sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros2/ubuntu $(lsb_release -sc) 
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 sudo apt update
 # 全家桶
-sudo apt install ros-foxy-desktop python3-argcomplete
+sudo apt install ros-galactic-desktop python3-argcomplete
 # 基础包,无gui和相关demo
-sudo apt install ros-foxy-ros-base python3-argcomplete
+sudo apt install ros-galactic-ros-base python3-argcomplete
 # ros2开发工具 ex: colcon
 sudo apt install ros-dev-tools
 # ros点云与pcl点云转换库
-sudo apt install ros-foxy-pcl-conversions
+sudo apt install ros-galactic-pcl-conversions
 # ros图像与opencv图像转换库
-sudo apt install ros-foxy-cv-bridge
+sudo apt install ros-galactic-cv-bridge
 # ros与前端交互库,websocket
-sudo apt install ros-foxy-rosbridge-suite
+sudo apt install ros-galactic-rosbridge-suite
 ```
 
 ---
